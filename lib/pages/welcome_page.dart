@@ -1,8 +1,11 @@
+import 'package:dbestech_211130/cubit/app_cubits.dart';
 import 'package:dbestech_211130/minsc/colors.dart';
 import 'package:dbestech_211130/widgets/app_text.dart';
 import 'package:dbestech_211130/widgets/responsive_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+// 메인페이지로 가기전 로그인 페이지 역할
 class WelcomePage extends StatefulWidget {
   const WelcomePage({Key? key}) : super(key: key);
 
@@ -46,7 +49,7 @@ class _WelcomePageState extends State<WelcomePage> {
                               text: 'Mountain',
                               size: 30,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 20,
                             ),
                             Container(
@@ -58,10 +61,16 @@ class _WelcomePageState extends State<WelcomePage> {
                                 size: 14,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 40,
                             ),
-                            ResponsiveButton(),
+                            // Button for loading data
+                            GestureDetector(
+                              onTap: () {
+                                BlocProvider.of<AppCubits>(context).getData();
+                              },
+                              child: ResponsiveButton(),
+                            ),
                           ],
                         ),
                         Column(

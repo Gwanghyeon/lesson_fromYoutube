@@ -1,6 +1,11 @@
+import 'package:dbestech_211130/cubit/app_cubit_logics.dart';
+import 'package:dbestech_211130/cubit/app_cubits.dart';
+import 'package:dbestech_211130/pages/detail_page.dart';
 import 'package:dbestech_211130/pages/nav_pages/main_page.dart';
 import 'package:dbestech_211130/pages/welcome_page.dart';
+import 'package:dbestech_211130/services/data_services.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,7 +31,12 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MainPage(),
+      home: BlocProvider<AppCubits>(
+        create: (context) => AppCubits(
+          data: DataServices(),
+        ),
+        child: AppCubitLogics(),
+      ),
     );
   }
 }
