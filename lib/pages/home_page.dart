@@ -59,59 +59,75 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 height: 10,
               ),
               // Tabbar 3가지 메뉴 이동
-              Container(
-                child: TabBar(
-                    isScrollable: true,
-                    indicatorSize: TabBarIndicatorSize.label,
-                    indicator: CircleTabIndicator(
-                        color: AppColors.mainColor, radius: 4),
-                    controller: _tabController,
-                    labelColor: Colors.black,
-                    unselectedLabelColor: Colors.grey,
-                    // place, inspiration,
-                    tabs: const [
-                      Tab(
-                        text: 'Places',
-                      ),
-                      Tab(
-                        text: 'Inspiration',
-                      ),
-                      Tab(
-                        text: 'Emotions',
-                      ),
-                    ]),
-              ),
-              // 탭바에 연결된 3가지 페이지
-              Container(
-                height: 200,
-                width: double.maxFinite,
-                child: TabBarView(
-                  controller: _tabController,
-                  children: [
-                    ListView.builder(
-                      padding: const EdgeInsets.only(left: 15),
-                      itemCount: info.length,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Container(
-                          margin: const EdgeInsets.only(right: 10, top: 10),
-                          width: 100,
-                          height: 150,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Colors.white,
-                              image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: NetworkImage(
-                                      'http://mark.bslmeiyu.com/uploads/' +
-                                          info[index].img))),
-                        );
-                      },
+              Row(
+                children: [
+                  RotatedBox(
+                    quarterTurns: 1,
+                    child: Container(
+                      child: TabBar(
+                          isScrollable: true,
+                          indicatorSize: TabBarIndicatorSize.label,
+                          indicator: CircleTabIndicator(
+                              color: AppColors.mainColor, radius: 4),
+                          controller: _tabController,
+                          labelColor: Colors.black,
+                          unselectedLabelColor: Colors.grey,
+                          // place, inspiration,
+                          tabs: const [
+                            Tab(
+                              text: 'Places',
+                            ),
+                            Tab(
+                              text: 'Inspiration',
+                            ),
+                            Tab(
+                              text: 'Emotions',
+                            ),
+                          ]),
                     ),
-                    Text('2'),
-                    Text('3')
-                  ],
-                ),
+                  ),
+                  // 탭바에 연결된 3가지 페이지
+                  Flexible(
+                    child: Container(
+                      height: 200,
+                      width: double.maxFinite,
+                      child: TabBarView(
+                        controller: _tabController,
+                        children: [
+                          ListView.builder(
+                            padding: const EdgeInsets.only(left: 15),
+                            itemCount: info.length,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (BuildContext context, int index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  BlocProvider.of<AppCubits>(context)
+                                      .detailPage(info[index]);
+                                },
+                                child: Container(
+                                  margin:
+                                      const EdgeInsets.only(right: 10, top: 10),
+                                  width: 130,
+                                  height: 190,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: Colors.white,
+                                      image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: NetworkImage(
+                                              'http://mark.bslmeiyu.com/uploads/' +
+                                                  info[index].img))),
+                                ),
+                              );
+                            },
+                          ),
+                          Text('2'),
+                          Text('3')
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
               // tabbar
               const SizedBox(
@@ -198,7 +214,7 @@ class _CirclePainter extends BoxPainter {
         // X 좌표
         configuration.size!.width / 2 - radius / 2,
         // Y 좌표
-        configuration.size!.height - radius);
+        configuration.size!.height - 35);
 
     canvas.drawCircle(offset + circleOffset, radius, _paint);
   }

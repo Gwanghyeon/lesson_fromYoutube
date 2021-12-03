@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:dbestech_211130/cubit/app_cubit_status.dart';
+import 'package:dbestech_211130/model/data_model.dart';
+import 'package:dbestech_211130/pages/detail_page.dart';
 import 'package:dbestech_211130/services/data_services.dart';
 
 // 어떤 형태의 큐빗이 될지 제네릭을 사용하여 선언
@@ -20,5 +22,13 @@ class AppCubits extends Cubit<CubitStates> {
     } catch (e) {
       print(e);
     }
+  }
+
+  detailPage(DataModel data) {
+    emit(DetailState(place: data));
+  }
+
+  goHome() {
+    emit(LoadedState(places: places));
   }
 }
